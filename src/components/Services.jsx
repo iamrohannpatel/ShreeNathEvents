@@ -173,7 +173,7 @@ const Services = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showEventDecoration, setShowEventDecoration] = useState(false);
 
   const filteredServices = activeFilter === 'all' 
     ? services 
@@ -186,8 +186,11 @@ const Services = () => {
       setSelectedService(serviceTitle);
       setModalOpen(true);
     }
-    // Event & Decoration is handled directly in the ServiceCard component
   };
+
+  if (showEventDecoration) {
+    return <EventDecoration />;
+  }
 
   return (
     <section id="services" className="pt-10 pb-16 md:pb-24 bg-gray-50 -mt-2">

@@ -1,92 +1,46 @@
-import React from 'react';
 
-export const Calendar = ({ selected, onSelect }) => {
-  const today = new Date();
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+import React, { useState } from 'react';
 
-  const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+const cls = (...classes) => classes.filter(Boolean).join(' ');
+
+function Calendar({ selected, onSelect }) {
+    const [month, setMonth] = useState(new Date())
+    const startOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1)
+    const endOfMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0)
+    const addMonths = (date, m) => new Date(date.getFullYear(), date.getMonth() + m, 1)
+    const isSameDay = (a, b) => a && b && a.toDateString() === b.toDateString()
   
-  const days = [];
-  const totalDays = daysInMonth(currentMonth, currentYear);
+    const grid = () => {
+      const start = startOfMonth(month)
+      const end = endOfMonth(month)
+      const days = []
+      const offset = (start.getDay() + 6) % 7
+      for (let i = 0; i < offset; i++) days.push(null)
+      for (let d = 1; d <= end.getDate(); d++) days.push(new Date(month.getFullYear(), month.getMonth(), d))
+      const rows = []
+      for (let i = 0; i < days.length; i += 7) rows.push(days.slice(i, i + 7))
+      return rows
+    }
   
-  // Previous month days
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    days.push(<div key={`empty-${i}`} className="h-10 w-10" />);
-  }
+    const monthName = month.toLocaleString('default', { month: 'long', year: 'numeric' })
   
-  // Current month days
-  for (let day = 1; day <= totalDays; day++) {
-    const date = new Date(currentYear, currentMonth, day);
-    const isSelected = selected && 
-                      date.getDate() === selected.getDate() && 
-                      date.getMonth() === selected.getMonth() && 
-                      date.getFullYear() === selected.getFullYear();
-    
-    days.push(
-      <button
-        key={day}
-        onClick={() => onSelect(date)}
-        className={`h-10 w-10 rounded-full flex items-center justify-center ${
-          isSelected 
-            ? 'bg-blue-600 text-white' 
-            : 'hover:bg-gray-100'
-        }`}
-      >
-        {day}
-      </button>
+    return (
+            <div className="min-h-screen bg-white">
+              <div className="flex items-center justify-between">
+                <button onClick={() => setMonth(addMonths(month, -1))} className="p-2 rounded hover:bg-gray-50" aria-label="Prev month"><svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+                <div className="font-medium">{monthName}</div>
+                <button onClick={() => setMonth(addMonths(month, 1))} className="p-2 rounded hover:bg-gray-50" aria-label="Next month"><svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+              </div>
+              <div className="mt-3 grid grid-cols-7 text-center text-xs text-gray-500">
+                {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => (<div key={d} className="py-1">{d}</div>))}
+              </div>
+              <div className="grid grid-cols-7 gap-1 text-sm">
+                {grid().flat().map((d, i) => (
+                  <button key={i} disabled={!d} onClick={() => onSelect(d)} className={cls('aspect-square rounded-md flex items-center justify-center', !d && 'opacity-0', d && 'hover:bg-gray-50', isSameDay(d, selected) && 'ring-2 ring-gold')}>{d ? d.getDate() : ''}</button>
+                ))}
+              </div>
+            </div>
     );
   }
-  
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-                     "July", "August", "September", "October", "November", "December"];
-  
-  const prevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
-  };
-  
-  const nextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
-  };
 
-  return (
-    <div className="bg-white rounded-lg shadow p-4 w-72">
-      <div className="flex justify-between items-center mb-4">
-        <button 
-          onClick={prevMonth}
-          className="p-1 hover:bg-gray-100 rounded-full"
-        >
-          &larr;
-        </button>
-        <h3 className="font-semibold">
-          {monthNames[currentMonth]} {currentYear}
-        </h3>
-        <button 
-          onClick={nextMonth}
-          className="p-1 hover:bg-gray-100 rounded-full"
-        >
-          &rarr;
-        </button>
-      </div>
-      <div className="grid grid-cols-7 gap-1 text-center text-sm">
-        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-          <div key={day} className="font-medium text-gray-500 py-1">
-            {day}
-          </div>
-        ))}
-        {days}
-      </div>
-    </div>
-  );
-};
+  export default Calendar;
