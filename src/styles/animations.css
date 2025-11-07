@@ -1,0 +1,44 @@
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 8s infinite linear;
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+  50% {
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+}
+
+.animate-border-glow {
+  animation: border-glow 2s infinite ease-in-out;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 375px) {
+  .xs\:h-\[320px\] {
+    height: 320px;
+  }
+  .xs\:w-28 {
+    width: 7rem;
+  }
+  .xs\:h-28 {
+    height: 7rem;
+  }
+  .xs\:w-24 {
+    width: 6rem;
+  }
+  .xs\:h-24 {
+    height: 6rem;
+  }
+}
