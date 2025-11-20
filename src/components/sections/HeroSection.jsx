@@ -76,6 +76,7 @@ const HeroSection = ({ translations, language, scrollTo }) => (
                     <motion.span 
                         className="inline-block px-4 py-2 mb-6 text-sm font-semibold tracking-wider text-amber-800 bg-amber-100 rounded-full shadow-sm"
                         variants={itemVariants}
+                        lang={language}
                     >
                         {translations[language].elevatingEvents}
                     </motion.span>
@@ -84,15 +85,16 @@ const HeroSection = ({ translations, language, scrollTo }) => (
                         className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6"
                         variants={itemVariants}
                     >
-                        <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent leading-snug">
+                        <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent leading-snug" lang={language}>
                             {translations[language].beautifulEvents}
                         </span>
-                        <span className="block mt-2">{translations[language].everyTime}</span>
+                        <span className="block mt-2" lang={language}>{translations[language].everyTime}</span>
                     </motion.h1>
                     
                     <motion.p 
                         className="text-lg text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0"
                         variants={itemVariants}
+                        lang={language}
                     >
                         {translations[language].transformEvents}
                     </motion.p>
@@ -106,12 +108,14 @@ const HeroSection = ({ translations, language, scrollTo }) => (
                             whileTap={{ scale: 0.95 }}
                             onClick={() => scrollTo('contact')}
                             className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-lg shadow-lg transition-all transform"
+                            lang={language}
                         >
                             {translations[language].planYourEvent}
                         </motion.button>
                         <motion.button 
                             // IMPROVED: Added 'group' class for the icon animation to work
                             className="group flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-gray-800 font-semibold rounded-lg border-2 border-amber-400 hover:bg-amber-50 transition-all"
+                            lang={language}
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => scrollTo('services')}
@@ -124,20 +128,56 @@ const HeroSection = ({ translations, language, scrollTo }) => (
                     </motion.div>
                 </motion.div>
 
-                {/* --- Right Column: Visual Element --- */}
+                {/* --- Right Column: Image Gallery --- */}
                 <motion.div 
-                    className="hidden lg:block relative"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full max-w-md mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <div className="relative w-full h-full">
-                        <div className="absolute -top-8 -left-8 w-full h-full bg-amber-200 rounded-3xl transform -rotate-6"></div>
-                        <img 
-                            src="/path/to/your/event-image.jpg" // IMPORTANT: Replace with your image
-                            alt="Beautifully organized event"
-                            className="relative w-full h-auto object-cover rounded-3xl shadow-2xl"
-                        />
+                    <div className="relative">
+                        {/* Decorative background element */}
+                        <div className="absolute -top-2 -left-2 w-full h-full bg-amber-100 rounded-2xl transform -rotate-1 -z-10"></div>
+                        
+                        {/* Responsive Image Grid */}
+                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2 p-1 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-amber-50">
+                            {Array.from({ length: 9 }).map((_, index) => {
+                                const imgNumber = index + 1;
+                                return (
+                                    <motion.div 
+                                        key={index}
+                                        className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group h-full w-full"
+                                        whileHover={{ scale: 1.02, zIndex: 10 }}
+                                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                                    >
+                                        <img
+                                            src={`/img${imgNumber}.jpg`}
+                                            alt={`Event ${imgNumber}`}
+                                            loading="lazy"
+                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2">
+                                            <span className="text-white text-xs font-medium truncate w-full px-2 py-1">
+                                                Event {imgNumber}
+                                            </span>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                        
+                        {/* Mobile View - Carousel Navigation */}
+                        <div className="flex justify-center mt-4 lg:hidden">
+                            <div className="flex space-x-2">
+                                {[0, 1, 2].map((dot) => (
+                                    <button 
+                                        key={dot}
+                                        className="w-2 h-2 rounded-full bg-amber-300 hover:bg-amber-500 transition-colors"
+                                        aria-label={`View gallery page ${dot + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
