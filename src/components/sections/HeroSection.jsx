@@ -56,34 +56,6 @@ const itemVariants = {
     },
 };
 
-const FloatingImage = ({ src, alt, className, delay = 0 }) => (
-    <motion.div
-        className={`relative overflow-hidden rounded-2xl shadow-xl shadow-amber-100/50 ${className}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay }}
-    >
-        <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{
-                duration: 4,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-                delay: delay * 2 // Offset the float animation
-            }}
-            className="h-full w-full"
-        >
-            <img
-                src={src}
-                alt={alt}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
-        </motion.div>
-    </motion.div>
-);
-
 const HeroSection = ({ translations, language, scrollTo }) => (
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden" data-section="home">
         <AnimatedBackground />
@@ -153,34 +125,51 @@ const HeroSection = ({ translations, language, scrollTo }) => (
                     </motion.div>
                 </motion.div>
 
-                {/* --- Right Column: Floating Staggered Gallery --- */}
-                <div className="relative hidden lg:block h-[600px]">
-                    {/* Column 1 */}
-                    <div className="absolute top-0 left-0 w-1/3 pr-2 space-y-4">
-                        <FloatingImage src="/img1.jpg" alt="Wedding" className="h-48 w-full" delay={0} />
-                        <FloatingImage src="/img4.jpg" alt="Decor" className="h-64 w-full" delay={0.2} />
+                {/* --- Right Column: Uniform 3x3 Grid with Background Design --- */}
+                <motion.div
+                    className="relative z-10 max-w-md lg:max-w-2xl mx-auto lg:mr-0"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {/* Decorative Backplate (Glassmorphism) */}
+                    <div className="absolute inset-0 bg-white/40 backdrop-blur-md rounded-3xl -rotate-3 scale-105 shadow-2xl border border-white/50 -z-10"></div>
+                    <div className="absolute inset-0 bg-amber-100/30 rounded-3xl rotate-2 scale-105 -z-20"></div>
+
+                    {/* The Grid */}
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3 p-3 bg-white/20 rounded-2xl border border-white/40 shadow-inner">
+                        {[
+                            { src: "/img1.jpg", alt: "Wedding Couple" },
+                            { src: "/img2.jpg", alt: "Decor Setup" },
+                            { src: "/img3.jpg", alt: "Ceremony Ritual" },
+                            { src: "/img4.jpg", alt: "Floral Arrangement" },
+                            { src: "/img5.jpg", alt: "Table Setting" },
+                            { src: "/img6.jpg", alt: "Evening Party" },
+                            { src: "/img7.jpg", alt: "Stage Design" },
+                            { src: "/img8.jpg", alt: "Entrance Decor" },
+                            { src: "/img9.jpg", alt: "Candid Moment" },
+                        ].map((img, index) => (
+                            <motion.div
+                                key={index}
+                                className="relative aspect-square lg:aspect-[3/2] overflow-hidden rounded-lg shadow-sm group"
+                                variants={itemVariants}
+                                whileHover={{ scale: 1.05, zIndex: 10 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <img
+                                    src={img.src}
+                                    alt={img.alt}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                            </motion.div>
+                        ))}
                     </div>
 
-                    {/* Column 2 - Shifted Down */}
-                    <div className="absolute top-12 left-1/3 w-1/3 px-2 space-y-4">
-                        <FloatingImage src="/img2.jpg" alt="Reception" className="h-64 w-full" delay={0.4} />
-                        <FloatingImage src="/img5.jpg" alt="Details" className="h-48 w-full" delay={0.6} />
-                    </div>
-
-                    {/* Column 3 */}
-                    <div className="absolute top-0 right-0 w-1/3 pl-2 space-y-4">
-                        <FloatingImage src="/img3.jpg" alt="Ceremony" className="h-48 w-full" delay={0.8} />
-                        <FloatingImage src="/img6.jpg" alt="Party" className="h-64 w-full" delay={1.0} />
-                    </div>
-                </div>
-
-                {/* Mobile Fallback: Simple Carousel or Grid */}
-                <div className="lg:hidden grid grid-cols-2 gap-3">
-                    <img src="/img1.jpg" alt="Event" className="rounded-xl shadow-md" />
-                    <img src="/img2.jpg" alt="Event" className="rounded-xl shadow-md mt-8" />
-                    <img src="/img3.jpg" alt="Event" className="rounded-xl shadow-md" />
-                    <img src="/img4.jpg" alt="Event" className="rounded-xl shadow-md mt-8" />
-                </div>
+                    {/* Floating Decorative Elements */}
+                    <div className="absolute -top-8 -right-8 w-20 lg:w-24 h-20 lg:h-24 bg-gradient-to-br from-amber-300 to-orange-300 rounded-full blur-xl opacity-60 animate-pulse"></div>
+                    <div className="absolute -bottom-6 -left-6 w-24 lg:w-28 h-24 lg:h-28 bg-gradient-to-tr from-amber-200 to-white rounded-full blur-xl opacity-50"></div>
+                </motion.div>
 
             </div>
         </div>
