@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Header from './components/layout/Header';
 import MobileMenu from './components/layout/MobileMenu';
@@ -13,6 +13,8 @@ import BookingSection from './components/sections/BookingSection';
 
 import Services from './components/Services';
 import Events from './components/Events';
+import GalleryPage from './pages/GalleryPage';
+import EventDecoration from './pages/EventDecoration';
 
 const translations = {
   en: {
@@ -51,6 +53,9 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState('en');
+  const location = useLocation();
+
+  const isEventDecorationPage = location.pathname === '/event-decoration';
 
   const enhancedScrollTo = (id) => {
     const el = document.getElementById(id);
@@ -68,38 +73,50 @@ function App() {
 
   return (
     <div className="bg-white antialiased text-gray-900">
-      <Header 
-        scrolled={scrolled}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        enhancedScrollTo={enhancedScrollTo}
-        language={language}
-        setLanguage={setLanguage}
-        translations={translations}
-      />
-      <MobileMenu 
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        enhancedScrollTo={enhancedScrollTo}
-        translations={translations}
-        language={language}
-      />
+      {!isEventDecorationPage && (
+        <>
+          <Header
+            scrolled={scrolled}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            enhancedScrollTo={enhancedScrollTo}
+            language={language}
+            setLanguage={setLanguage}
+            translations={translations}
+          />
+          <MobileMenu
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            enhancedScrollTo={enhancedScrollTo}
+            translations={translations}
+            language={language}
+          />
+        </>
+      )}
 
       <main>
-        <HeroSection 
-          translations={translations}
-          language={language}
-          scrollTo={enhancedScrollTo}
-        />
-        <AboutSection />
-        <Services />
-        <Events />
-        <BookingSection />
-        <TestimonialsSection />
-        <ContactSection />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <HeroSection
+                translations={translations}
+                language={language}
+                scrollTo={enhancedScrollTo}
+              />
+              <AboutSection />
+              <Services />
+              <Events />
+              <BookingSection />
+              <TestimonialsSection />
+              <ContactSection />
+            </>
+          } />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/event-decoration" element={<EventDecoration />} />
+        </Routes>
       </main>
-      
-      <Footer enhancedScrollTo={enhancedScrollTo} />
+
+      {!isEventDecorationPage && <Footer enhancedScrollTo={enhancedScrollTo} />}
     </div>
   );
 }
