@@ -54,7 +54,7 @@ const services = [
 const ServiceCard = ({ service, index, onLearnMore }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const handleLearnMore = (serviceTitle) => {
     if (serviceTitle === 'Event & Decoration') {
       navigate('/event-decoration');
@@ -139,7 +139,7 @@ const ComingSoonModal = ({ isOpen, onClose, serviceName }) => {
           >
             <FiX className="w-6 h-6" />
           </button>
-          
+
           <div className="text-center">
             <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-amber-100 mb-4">
               <svg className="h-8 w-8 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
@@ -153,7 +153,7 @@ const ComingSoonModal = ({ isOpen, onClose, serviceName }) => {
             <p className="text-sm text-gray-500">
               In the meantime, feel free to explore our <span className="text-amber-600 font-medium">Event & Decoration</span> services or contact us for more information.
             </p>
-            
+
             <div className="mt-6">
               <button
                 onClick={onClose}
@@ -169,17 +169,17 @@ const ComingSoonModal = ({ isOpen, onClose, serviceName }) => {
   );
 };
 
-const Services = () => {
+const Services = ({ scrollTo }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
   const [showEventDecoration, setShowEventDecoration] = useState(false);
 
-  const filteredServices = activeFilter === 'all' 
-    ? services 
-    : services.filter(service => 
-        activeFilter === 'featured' ? service.isPrimary : true
-      );
+  const filteredServices = activeFilter === 'all'
+    ? services
+    : services.filter(service =>
+      activeFilter === 'featured' ? service.isPrimary : true
+    );
 
   const handleLearnMore = (serviceTitle) => {
     if (serviceTitle !== 'Event & Decoration') {
@@ -212,17 +212,16 @@ const Services = () => {
             </svg>
             <span className="font-medium text-gray-900">Event and Decoration is our primary service.</span>
           </div>
-          
+
           <div className="flex justify-center mt-8 space-x-2">
             {['all', 'featured'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeFilter === filter
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeFilter === filter
                     ? 'bg-amber-600 text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 {filter === 'all' ? 'All Services' : 'Featured'}
               </button>
@@ -237,17 +236,17 @@ const Services = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {filteredServices.map((service, index) => (
-            <ServiceCard 
-              key={service.id} 
-              service={service} 
-              index={index} 
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={index}
               onLearnMore={(serviceTitle) => handleLearnMore(serviceTitle)}
             />
           ))}
-          
-          <ComingSoonModal 
-            isOpen={modalOpen} 
-            onClose={() => setModalOpen(false)} 
+
+          <ComingSoonModal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
             serviceName={selectedService}
           />
         </motion.div>
@@ -263,6 +262,7 @@ const Services = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTo('booking')}
               className="px-8 py-4 bg-amber-600 text-white rounded-xl font-medium hover:bg-amber-700 transition-colors shadow-lg hover:shadow-amber-200"
             >
               Schedule Event
@@ -270,6 +270,7 @@ const Services = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTo('events')}
               className="px-8 py-4 bg-white text-amber-600 border-2 border-amber-200 rounded-xl font-medium hover:bg-amber-50 transition-colors"
             >
               View Events

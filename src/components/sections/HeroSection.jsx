@@ -2,40 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-// A simple component for the animated background blobs
-const AnimatedBackground = () => (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-white"></div>
-        {/* Optional: grid background */}
-        <div className="absolute inset-0 bg-[url('/grid.svg')] [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-        {/* NEW: Animated Blobs for depth */}
-        <motion.div
-            className="absolute top-1/4 left-1/4 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-40"
-            animate={{
-                x: [0, 50, 0],
-                y: [0, -30, 0],
-            }}
-            transition={{
-                duration: 8,
-                repeat: Infinity,
-                repeatType: "reverse",
-            }}
-        />
-        <motion.div
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"
-            animate={{
-                x: [0, -40, 0],
-                y: [0, 60, 0],
-            }}
-            transition={{
-                duration: 12,
-                repeat: Infinity,
-                repeatType: "reverse",
-                delay: 2,
-            }}
-        />
-    </div>
-);
+import AnimatedBackground from '../AnimatedBackground';
 
 // Framer Motion Variants for staggered animations
 const containerVariants = {

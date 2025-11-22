@@ -104,8 +104,8 @@ function App() {
                 scrollTo={enhancedScrollTo}
               />
               <AboutSection />
-              <Services />
-              <Events />
+              <Services scrollTo={enhancedScrollTo} />
+              <Events scrollTo={enhancedScrollTo} />
               <BookingSection />
               <TestimonialsSection />
               <ContactSection />
