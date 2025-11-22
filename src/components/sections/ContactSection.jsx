@@ -106,7 +106,7 @@ const ContactSection = () => {
                                     </div>
                                     <div className="ml-3">
                                         <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wide">Call Us</p>
-                                        <p className="text-base font-medium text-gray-900">+91 98765 43210</p>
+                                        <p className="text-base font-medium text-gray-900">+91 93029 48044</p>
                                     </div>
                                 </a>
 
@@ -131,7 +131,7 @@ const ContactSection = () => {
                                     </div>
                                     <div className="ml-3">
                                         <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wide">Visit Us</p>
-                                        <p className="text-base font-medium text-gray-900">Jaipur, Rajasthan, India</p>
+                                        <p className="text-base font-medium text-gray-900">Dewas, Madhya Pradesh, India</p>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@ const ContactSection = () => {
                                             onFocus={handleFocus}
                                             onBlur={handleBlur}
                                             className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 text-sm"
-                                            placeholder="John Doe"
+                                            placeholder="Shivam Patel"
                                             required
                                         />
                                     </div>
@@ -179,7 +179,7 @@ const ContactSection = () => {
                                             onFocus={handleFocus}
                                             onBlur={handleBlur}
                                             className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 text-sm"
-                                            placeholder="john@example.com"
+                                            placeholder="shivam@example.com"
                                             required
                                         />
                                     </div>
@@ -197,7 +197,7 @@ const ContactSection = () => {
                                             onFocus={handleFocus}
                                             onBlur={handleBlur}
                                             className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 text-sm"
-                                            placeholder="+91 98765 43210"
+                                            placeholder="+91 93029 48044"
                                             required
                                         />
                                     </div>
@@ -211,7 +211,7 @@ const ContactSection = () => {
                                                 onChange={handleChange}
                                                 onFocus={handleFocus}
                                                 onBlur={handleBlur}
-                                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 appearance-none text-sm"
+                                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 appearance-none no-spinner text-sm"
                                             >
                                                 <option value="" disabled>Select an event type</option>
                                                 <option value="wedding">Wedding</option>

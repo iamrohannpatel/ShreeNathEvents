@@ -75,7 +75,7 @@ const BookingSection = () => {
             transition={{ delay: 0.1 }}
             className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4"
           >
-            Book a Consultation
+            Schedule your Event
           </motion.h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             We accept a limited number of commissions each season to ensure every event receives our undivided attention.
@@ -141,10 +141,12 @@ const BookingSection = () => {
                           className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all"
                         >
                           <option value="">Select a range</option>
-                          <option>₹5 Lakh - ₹10 Lakh</option>
-                          <option>₹10 Lakh - ₹25 Lakh</option>
-                          <option>₹25 Lakh - ₹50 Lakh</option>
-                          <option>₹50 Lakh+</option>
+                          <option>₹2,000 - ₹3,000</option>
+                          <option>₹3,000 - ₹5,000</option>
+                          <option>₹5,000 - ₹7,000</option>
+                          <option>₹7,000 - ₹10,000</option>
+                          <option>₹10,000 - ₹20,000</option>
+                          <option>₹20,000+</option>
                         </select>
                       </div>
                     </div>
@@ -254,7 +256,7 @@ const BookingSection = () => {
               <p className="text-gray-300 text-sm mb-6 leading-relaxed">
                 To ensure serious inquiries, we charge a nominal consultation fee which is fully adjustable against your final booking.
               </p>
-              <div className="text-3xl font-bold text-amber-400 mb-2">₹2,500</div>
+              <div className="text-3xl font-bold text-amber-400 mb-2">₹500</div>
               <p className="text-xs text-gray-400">Adjustable against final bill</p>
             </div>
           </motion.div>
